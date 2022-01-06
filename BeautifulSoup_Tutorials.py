@@ -35,6 +35,7 @@ import re
 with open("index2.html", "r") as f:
     doc = BeautifulSoup(f, "html.parser")
 
+###################################################    
 tags = doc.find_all("input", type="text")
 
 for tag in tags:
@@ -42,6 +43,7 @@ for tag in tags:
 
 with open("changed.html", "w") as file:
     file.write(str(doc))
+###################################################
 
 tags=doc.find_all(["p","li","div"])
  
@@ -50,5 +52,10 @@ tags=doc.find_all("option",text="Undergraduate",value="undergraduate")
 tags=doc.find_all(class_="btn-item")
 print(tags)
 
+tags=doc.find_all(text=re.compile("\$.*"),limit=1)
 
+for tag in tags:
+    print(tag.strip())
+    
 
+    
