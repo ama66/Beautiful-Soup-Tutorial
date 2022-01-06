@@ -28,6 +28,7 @@ parent = prices[0].parent
 strong = parent.find("strong")
 print(strong.string)
 
+######################################################################################
 
 from bs4 import BeautifulSoup
 import re
@@ -57,5 +58,37 @@ tags=doc.find_all(text=re.compile("\$.*"),limit=1)
 for tag in tags:
     print(tag.strip())
     
-
+##############################################################
     
+from bs4 import BeautifulSoup
+import requests
+
+url = "https://coinmarketcap.com/"
+result = requests.get(url).text
+doc = BeautifulSoup(result, "html.parser")
+
+tbody = doc.tbody
+
+trs = tbody.contents
+
+# print(trs[0].next_sibling)
+# print(trs[1].previous_sibling)
+#trs[0].next_siblings returns an iterator
+##trs[0].parent! the parent tag..parent.name gives the name 
+## trs[0].descendents gives an iterator for descendents
+## children also similar to descendents
+
+prices = {}
+
+for tr in trs[:10]:
+    name, price = tr.contents[2:4]
+    fixed_name = name.p.string
+    fixed_price = price.a.string
+
+    prices[fixed_name] = fixed_price
+
+print(prices)
+
+
+#######################################################################################
+
